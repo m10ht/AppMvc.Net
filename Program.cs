@@ -1,4 +1,8 @@
+using System.Net;
+using App.ExtendMethods;
+using App.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,9 @@ builder.Services.Configure<RazorViewEngineOptions>(options => {
     options.PageViewLocationFormats.Add("/MyView/{1}/{0}" + RazorViewEngine.ViewExtension);
 });
 
+builder.Services.AddSingleton<PlanetService>();
+builder.Services.AddSingleton<ProductService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,13 +32,37 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.AddStatusCodePage();   // Tùy biến Response khi có lỗi Code 400 - 599
 
-app.UseRouting();
+app.UseRouting();   //EndpointRoutingMiddleware
 
-app.UseAuthorization();
+app.UseAuthorization(); // Xac thuc quyen truy cap
+
+app.MapAreaControllerRoute(
+    name: "product",
+    areaName: "ProductManage",
+    pattern: "{controller}/{action=Index}/{id?}"
+);
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// app.MapControllerRoute(
+//     name: "first",
+//     pattern: "{url}/{id?}",
+//     defaults: new {
+//         controller = "First",
+//         action = "MyView"
+//     },
+    // constraints: new {
+    //     url = new StringRouteConstraint("xemsanpham"),
+    //     id = new RangeRouteConstraint(1,3)
+    // });
+
+app.UseEndpoints(e => {
+    e.MapGet("/sayhi", async (context) => {
+        await context.Response.WriteAsync($"Hello ASP.NET MVC {DateTime.Now}");
+    });
+});
 app.Run();

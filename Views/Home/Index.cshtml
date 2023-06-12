@@ -6,3 +6,44 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+
+
+<p>
+    @Url.RouteUrl("default")
+</p>
+
+@* @{
+    var routeData = new Dictionary<string, string>() {
+            {"name","VNC"},
+            {"id","3"}
+        };
+} *@
+<a asp-action="Index" asp-controller="Product" asp-area="ProductManage" asp-all-route-data='@new Dictionary<string, string>() {
+            {"name","VNC"},
+            {"id","3"}
+        }'>
+        VIDU
+        </a>
+
+
+
+@* <p>
+    @Url.ActionLink("PlanetInfo", "Planet", new {id = 3})
+</p>
+
+<p>
+    @Url.Action("Neptune", "Planet")
+</p>
+<p>
+    @Url.Action("Jupiter", "Planet")
+</p>
+<p>
+    @Url.ActionLink("Jupiter", "Planet")
+</p>
+<p>
+    @Url.ActionLink("Mercury", "Planet")
+</p>
+<p>
+    @Url.ActionLink("Index", "Product" ,new {area = "ProductManage"})
+</p> *@
