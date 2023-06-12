@@ -1,13 +1,22 @@
 using System.Net;
 using App.ExtendMethods;
+using App.Models;
 using App.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>(options => {
+    // builder.Configuration.GetConnectionString("ConnectionStrings:AppMvcConnectionString");
+    string? connectString = builder.Configuration["ConnectionStrings:AppMvcConnectionString"];
+    options.UseSqlServer(connectString);
+    
+});
 
 builder.Services.Configure<RazorViewEngineOptions>(options => {
     //đường dẫn mặc định: /View/Controller/Action.cshtml
