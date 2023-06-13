@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+<partial name="_AlertMessage" />
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
@@ -9,9 +11,9 @@
 
 
 
-<p>
+@* <p>
     @Url.RouteUrl("default")
-</p>
+</p> *@
 
 @* @{
     var routeData = new Dictionary<string, string>() {
@@ -19,12 +21,12 @@
             {"id","3"}
         };
 } *@
-<a asp-action="Index" asp-controller="Product" asp-area="ProductManage" asp-all-route-data='@new Dictionary<string, string>() {
+@* <a asp-action="Index" asp-controller="Product" asp-area="ProductManage" asp-all-route-data='@new Dictionary<string, string>() {
             {"name","VNC"},
             {"id","3"}
         }'>
         VIDU
-        </a>
+        </a> *@
 
 
 
